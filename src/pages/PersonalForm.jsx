@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { actionSendFormPersonal } from '../store/actions/indexActions';
 
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -26,6 +28,7 @@ class PersonalForm extends Component {
   }
 
   render() {
+    const { sendPersonalData, history } = this.props;
     const { name, email, cpf, address, city, uf } = this.state;
     const ufList = [
       'Rio de Janeiro',
@@ -84,11 +87,20 @@ class PersonalForm extends Component {
         <Button
           type="button"
           label="Enviar"
-          onClick={ () => console.log('Ao clicar, envie a informação do formulário') }
+          onClick={ () => {
+            sendPersonalData(this.state);
+            history.push('/professionalform');
+          } }
         />
       </fieldset>
     );
   }
 }
 
-export default PersonalForm;
+const mapStateToProps = (state) => ({
+  personalData: state.personalFormReducer });
+
+const mapDispatchToProps = (dispatch) => ({
+  sendPersonalData: (state) => dispatch(actionSendFormPersonal(state)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalForm);

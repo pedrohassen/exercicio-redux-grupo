@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { actionSendFormProfessional } from '../store/actions/indexActions';
 
 import Input from '../components/Input';
 import TextArea from '../components/TextArea';
@@ -21,6 +23,7 @@ class ProfessionalForm extends Component {
   }
 
   render() {
+    const { sendProfessionalData, history } = this.props;
     const { curriculum, job, description } = this.state;
     return (
       <fieldset>
@@ -50,11 +53,20 @@ class ProfessionalForm extends Component {
         />
         <Button
           label="enviar"
-          onClick={ () => console.log('Envia as informações para a store') }
+          onClick={ () => {
+            sendProfessionalData(this.state);
+            history.push('/formdisplay');
+          } }
         />
       </fieldset>
     );
   }
 }
 
-export default ProfessionalForm;
+const mapStateToProps = (state) => ({
+  professionalData: state.professionalFormReducer });
+
+const mapDispatchToProps = (dispatch) => ({
+  sendProfessionalData: (state) => dispatch(actionSendFormProfessional(state)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalForm);
