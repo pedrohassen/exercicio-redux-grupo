@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { actionSendFormProfessional } from '../store/actions/indexActions';
 
 import Input from '../components/Input';
@@ -22,8 +22,14 @@ class ProfessionalForm extends Component {
     this.setState({ [name]: value });
   }
 
+  handleClick = (event) => {
+    event.preventDefault();
+    const { history } = this.props;
+    actionSendFormProfessional(this.state);
+    history.push('/formdisplay');
+  }
+
   render() {
-    const { sendProfessionalData, history } = this.props;
     const { curriculum, job, description } = this.state;
     return (
       <fieldset>
@@ -53,20 +59,17 @@ class ProfessionalForm extends Component {
         />
         <Button
           label="enviar"
-          onClick={ () => {
-            sendProfessionalData(this.state);
-            history.push('/formdisplay');
-          } }
+          onClick={ this.handleClick }
         />
       </fieldset>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  professionalData: state.professionalFormReducer });
+ProfessionalForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
-const mapDispatchToProps = (dispatch) => ({
-  sendProfessionalData: (state) => dispatch(actionSendFormProfessional(state)) });
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalForm);
+export default ProfessionalForm;

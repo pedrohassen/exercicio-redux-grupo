@@ -4,45 +4,45 @@ import { connect } from 'react-redux';
 
 class FormDataDisplay extends Component {
   render() {
-    const { formDataDisplay } = this.props;
+    const { personal, professional } = this.props;
     return (
       <div>
         <h2>Dados enviados</h2>
         <div>
           Nome:
-          { formDataDisplay.personalForm.state.name }
+          { personal.name }
         </div>
         <div>
           Email:
-          { formDataDisplay.personalForm.state.email }
+          { personal.email }
         </div>
         <div>
           CPF:
-          { formDataDisplay.personalForm.state.cpf }
+          { personal.cpf }
         </div>
         <div>
           Endereço:
-          { formDataDisplay.personalForm.state.address }
+          { personal.address }
         </div>
         <div>
           Cidade:
-          { formDataDisplay.personalForm.state.city }
+          { personal.city }
         </div>
         <div>
           Estado:
-          { formDataDisplay.personalForm.state.uf }
+          { personal.uf }
         </div>
         <div>
           Currículo:
-          { formDataDisplay.professionalForm.state.curriculum }
+          { professional.curriculum }
         </div>
         <div>
           Cargo:
-          { formDataDisplay.professionalForm.state.job }
+          { professional.job }
         </div>
         <div>
           Descrição do cargo:
-          { formDataDisplay.professionalForm.state.description }
+          { professional.description }
         </div>
       </div>
     );
@@ -50,20 +50,23 @@ class FormDataDisplay extends Component {
 }
 
 FormDataDisplay.propTypes = {
-  formDataDisplay: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    cpf: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    job: PropTypes.string.isRequired,
-    curriculum: PropTypes.string.isRequired,
-    uf: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
+  personal: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    cpf: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    uf: PropTypes.string,
+  }).isRequired,
+  professional: PropTypes.shape({
+    curriculum: PropTypes.string,
+    job: PropTypes.string,
+    description: PropTypes.string,
   }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  formDataDisplay: state });
+  personal: state.personalForm,
+  professional: state.professionalForm });
 
-export default connect(mapStateToProps, null)(FormDataDisplay);
+export default connect(mapStateToProps)(FormDataDisplay);

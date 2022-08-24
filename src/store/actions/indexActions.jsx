@@ -1,6 +1,10 @@
 import { SEND_FORM_PERSONAL, SEND_FORM_PROFESSIONAL } from './actionTypes';
+import store from '..';
 
-export const actionSendFormPersonal = (value) => ({ type: SEND_FORM_PERSONAL, value });
+export const actionSendFormPersonal = (value) => (
+  store.dispatch({ type: SEND_FORM_PERSONAL, value })
+);
 
-export const
-  actionSendFormProfessional = (value) => ({ type: SEND_FORM_PROFESSIONAL, value });
+export const actionSendFormProfessional = (value) => (
+  store.dispatch({ type: SEND_FORM_PROFESSIONAL, value })
+);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { actionSendFormPersonal } from '../store/actions/indexActions';
 
 import Input from '../components/Input';
@@ -27,8 +27,14 @@ class PersonalForm extends Component {
     this.setState({ [name]: value });
   }
 
+  handleClick = (event) => {
+    event.preventDefault();
+    const { history } = this.props;
+    actionSendFormPersonal(this.state);
+    history.push('/professionalform');
+  }
+
   render() {
-    const { sendPersonalData, history } = this.props;
     const { name, email, cpf, address, city, uf } = this.state;
     const ufList = [
       'Rio de Janeiro',
@@ -87,20 +93,17 @@ class PersonalForm extends Component {
         <Button
           type="button"
           label="Enviar"
-          onClick={ () => {
-            sendPersonalData(this.state);
-            history.push('/professionalform');
-          } }
+          onClick={ this.handleClick }
         />
       </fieldset>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  personalData: state.personalFormReducer });
+PersonalForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
-const mapDispatchToProps = (dispatch) => ({
-  sendPersonalData: (state) => dispatch(actionSendFormPersonal(state)) });
-
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalForm);
+export default PersonalForm;

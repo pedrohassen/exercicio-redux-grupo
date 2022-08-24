@@ -1,7 +1,12 @@
 import { SEND_FORM_PERSONAL } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
-  state: '',
+  name: '',
+  email: '',
+  cpf: '',
+  address: '',
+  city: '',
+  uf: '',
 };
 
 function personalForm(state = INITIAL_STATE, action) {
@@ -9,7 +14,7 @@ function personalForm(state = INITIAL_STATE, action) {
   case SEND_FORM_PERSONAL:
     return {
       ...state,
-      state: action.value,
+      ...action.value,
     };
   default:
     return state;

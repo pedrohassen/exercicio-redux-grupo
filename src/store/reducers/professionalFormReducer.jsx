@@ -1,7 +1,9 @@
 import { SEND_FORM_PROFESSIONAL } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
-  state: '',
+  curriculum: '',
+  job: '',
+  description: '',
 };
 
 function professionalForm(state = INITIAL_STATE, action) {
@@ -9,7 +11,7 @@ function professionalForm(state = INITIAL_STATE, action) {
   case SEND_FORM_PROFESSIONAL:
     return {
       ...state,
-      state: action.value,
+      ...action.value,
     };
   default:
     return state;
